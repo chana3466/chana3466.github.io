@@ -1,328 +1,149 @@
 /* =====================
-   IMAGE TRACK DRAG
+   NAV — highlight the tab for the section on screen
    ===================== */
-  
-   const track = document.getElementById('image-track');
-   if (track) {
-     track.dataset.mouseDownAt = "0";
-     track.dataset.prevPercentage = "0";
-   
-     window.onmousedown = e => {
-       track.dataset.mouseDownAt = e.clientX;
-     };
-   
-     window.onmouseup = () => {
-       track.dataset.mouseDownAt = "0";
-       track.dataset.prevPercentage = track.dataset.percentage || "0";
-     };
-   
-     window.onmousemove = e => {
-       if (track.dataset.mouseDownAt === "0") return;
-       const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX;
-       const maxDelta = window.innerWidth / 2;
-       const percentage = (mouseDelta / maxDelta) * -100;
-       const nextPercentage = parseFloat(track.dataset.prevPercentage) + percentage;
-       track.dataset.percentage = nextPercentage;
-       track.style.transform = `translate(${nextPercentage}%, 0%)`;
-     };
-   }
-   
-   /* =====================
-      RESUME BUTTONS
-      ===================== */
-   const button1 = document.getElementById("resume1-button");
-   if (button1) {
-     button1.addEventListener("click", function () {
-       document.getElementById("resume-viewer").setAttribute("data", "resume.pdf");
-     });
-   }
-   
-   const button2 = document.getElementById("resume2-button");
-   if (button2) {
-     button2.addEventListener("click", function () {
-       document.getElementById("resume-viewer").setAttribute("data", "resumeReg.pdf");
-     });
-   }
-   
-   /* =====================
-      DROPDOWNS
-      ===================== */
-   const dropdowns = document.querySelectorAll(".dropdown");
-   dropdowns.forEach(btn => {
-     btn.addEventListener("click", () => {
-       btn.classList.toggle("active");
-       const content = btn.nextElementSibling;
-       if (content.style.maxHeight) {
-         content.style.maxHeight = null;
-       } else {
-         content.style.maxHeight = content.scrollHeight + "px";
-       }
-     });
-   });
-   
-   /* =====================
-      COLOR HELPERS
-      ===================== */
-   function hexToRgb(hex) {
-     return {
-       r: parseInt(hex.slice(1, 3), 16),
-       g: parseInt(hex.slice(3, 5), 16),
-       b: parseInt(hex.slice(5, 7), 16)
-     };
-   }
-   
-   function lerpColor(a, b, t) {
-     const ca = hexToRgb(a);
-     const cb = hexToRgb(b);
-     const r  = Math.round(ca.r + t * (cb.r - ca.r));
-     const g  = Math.round(ca.g + t * (cb.g - ca.g));
-     const bl = Math.round(ca.b + t * (cb.b - ca.b));
-     return `rgb(${r},${g},${bl})`;
-   }
-   
-   /* =====================
-      SKILLS SETUP
-      ===================== */
-   const skillsSection = document.querySelector('.skills-section');
-   const bgColors   = ['#dceeff', '#a8c8f0', '#7aaee0', '#4d8fd0', '#2070c0'];
-   const cardColors = ['#f0f7ff', '#d6eaff', '#b8d8ff', '#96c3ff', '#70aaff'];
-   
-   /* =====================
-      TYPEWRITER EFFECT
-      ===================== */
-   function typeItem(li, text, speed, callback) {
-     li.textContent = '';
-     li.style.visibility = 'visible';
-     let i = 0;
-     const cursor = document.createElement('span');
-     cursor.classList.add('type-cursor');
-     cursor.textContent = '|';
-     li.appendChild(cursor);
-   
-     const interval = setInterval(() => {
-       cursor.before(text[i]);
-       i++;
-       if (i >= text.length) {
-         clearInterval(interval);
-         cursor.remove();
-         if (callback) callback();
-       }
-     }, speed);
-   }
-   
-   function animateCardItems(card) {
-     const items = card.querySelectorAll('ul li');
-     let index = 0;
-   
-     function next() {
-       if (index >= items.length) return;
-       const li = items[index];
-       const text = li.dataset.text || li.textContent.trim();
-       li.dataset.text = text;
-       index++;
-       typeItem(li, text, 40, () => setTimeout(next, 80));
-     }
-   
-     next();
-   }
-   
-   const animatedCards = new Set();
-   
-   function checkSkillCards() {
-     document.querySelectorAll('.skill-card').forEach(card => {
-       if (animatedCards.has(card)) return;
-       const rect = card.getBoundingClientRect();
-       if (rect.top < window.innerHeight - 60) {
-         animatedCards.add(card);
-         card.classList.add('active');
-   
-         card.querySelectorAll('ul li').forEach(li => {
-           li.dataset.text = li.textContent.trim();
-           li.textContent = '';
-           li.style.visibility = 'hidden';
-         });
-   
-         setTimeout(() => animateCardItems(card), 300);
-       }
-     });
-   }
-   
-   /* =====================
-      DOTS — scroll-driven
-      ===================== */
-   /* =====================
-   DIAMOND DOTS
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
+const sections = [...navLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+  });
+}, { rootMargin: '-50% 0px -50% 0px' });
+
+sections.forEach(s => sectionObserver.observe(s));
+
+/* =====================
+   SCROLL REVEAL
    ===================== */
-const dotsRow  = document.querySelector('.skills-dots');
-const DIAMONDS = 20; // how many diamonds across
-const allDots  = [];
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('in');
+    revealObserver.unobserve(entry.target);
+  });
+}, { rootMargin: '0px 0px -10% 0px' });
 
-if (dotsRow) {
-  for (let d = 0; d < DIAMONDS; d++) {
-    const diamond = document.createElement('div');
-    diamond.classList.add('mini-diamond');
-    diamond.style.gridColumn = d + 1;
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-    for (let cell = 0; cell < 9; cell++) {
-      if ([1, 3, 5, 7].includes(cell)) {
-        const dot = document.createElement('span');
-        dot.classList.add('sdot');
-        diamond.appendChild(dot);
-        allDots.push({ dot, diamond: d });
-      } else {
-        const empty = document.createElement('span');
-        empty.classList.add('sdot-empty');
-        diamond.appendChild(empty);
-      }
-    }
+/* =====================
+   LUNA CAROUSEL
+   ===================== */
+const lunaTrack = document.querySelector('.Luna-track');
+if (lunaTrack) {
+  const lunaCards = document.querySelectorAll('.Luna-card');
+  const descs     = document.querySelectorAll('.Luna-desc');
+  let current     = 0;
 
-    dotsRow.appendChild(diamond);
+  function goTo(index) {
+    descs[current].classList.remove('active');
+    current = (index + lunaCards.length) % lunaCards.length;
+    lunaTrack.style.transform = `translateX(-${current * 100}%)`;
+    descs[current].classList.add('active');
   }
-}
 
-function updateDots() {
-  if (!dotsRow || allDots.length === 0) return;
+  document.querySelector('.Luna-prev').addEventListener('click', () => goTo(current - 1));
+  document.querySelector('.Luna-next').addEventListener('click', () => goTo(current + 1));
 
-  const rect         = dotsRow.getBoundingClientRect();
-  const windowHeight = window.innerHeight;
-  const progress     = Math.max(0, Math.min(1, 1 - rect.bottom / windowHeight));
-
-  const visibleDiamonds = progress * DIAMONDS;
-
-  allDots.forEach(({ dot, diamond }) => {
-    // diamond 0 is leftmost, reveals first
-    if (diamond < visibleDiamonds) {
-      dot.classList.add('pop');
-    } else {
-      dot.classList.remove('pop');
-    }
+  let startX = 0;
+  lunaTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX, { passive: true });
+  lunaTrack.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
   });
 }
-   /* =====================
-      TIMELINE REVEAL
-      ===================== */
-   const timelineItems = document.querySelectorAll(".timeline-content");
-   
-   function checkTimeline() {
-     timelineItems.forEach(item => {
-       const top = item.getBoundingClientRect().top;
-       if (top < window.innerHeight - 100) {
-         item.classList.add("show");
-       }
-     });
-   }
-   
-   /* =====================
-      MAIN SCROLL LISTENER
-      ===================== */
-   window.addEventListener('scroll', () => {
-   
-     // Skills section background + card color shift
-     if (skillsSection) {
-       const rect          = skillsSection.getBoundingClientRect();
-       const sectionHeight = skillsSection.offsetHeight;
-       const scrolled      = -rect.top;
-       const progress      = Math.max(0, Math.min(1, scrolled / sectionHeight));
-       const scaled        = progress * (bgColors.length - 1);
-       const index         = Math.min(Math.floor(scaled), bgColors.length - 2);
-       const t             = scaled - index;
-   
-       skillsSection.style.backgroundColor = lerpColor(bgColors[index], bgColors[index + 1], t);
-   
 
-     }
-   
-     checkSkillCards();
-     updateDots();
-     checkTimeline();
-   });
-   
-   // Run on load in case elements are already in view
-   checkSkillCards();
-   updateDots();
-   checkTimeline();
-   
-   /* =====================
-      LUNA CAROUSEL
-      ===================== */
-   const lunaTrack = document.querySelector('.Luna-track');
-   if (lunaTrack) {
-     const lunaCards     = document.querySelectorAll('.Luna-card');
-     const descs         = document.querySelectorAll('.Luna-desc');
-     const dotsContainer = document.querySelector('.Luna-dots');
-     let current         = 0;
-   
-     lunaCards.forEach((_, i) => {
-       const dot = document.createElement('div');
-       dot.classList.add('Luna-dot');
-       if (i === 0) dot.classList.add('active');
-       dot.addEventListener('click', () => goTo(i));
-       dotsContainer.appendChild(dot);
-     });
-   
-     function goTo(index) {
-       descs[current].classList.remove('active');
-       document.querySelectorAll('.Luna-dot')[current].classList.remove('active');
-       current = (index + lunaCards.length) % lunaCards.length;
-       lunaTrack.style.transform = `translateX(-${current * 100}%)`;
-       descs[current].classList.add('active');
-       document.querySelectorAll('.Luna-dot')[current].classList.add('active');
-     }
-   
-     document.querySelector('.Luna-prev').addEventListener('click', () => goTo(current - 1));
-     document.querySelector('.Luna-next').addEventListener('click', () => goTo(current + 1));
-   
-     let startX = 0;
-     lunaTrack.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-     lunaTrack.addEventListener('touchend', e => {
-       const diff = startX - e.changedTouches[0].clientX;
-       if (Math.abs(diff) > 50) goTo(current + (diff > 0 ? 1 : -1));
-     });
-   }
+/* =====================
+   PAC-MAN — retro desktop windows
+   ===================== */
+const desktop = document.querySelector('.desktop');
+if (desktop) {
+  const wins  = [...desktop.querySelectorAll('.win')];
+  const tabs  = [...document.querySelectorAll('.task-tab')];
+  const clock = document.querySelector('.taskbar-clock');
+  let topZ    = 10;
 
-   function showSection(sectionId) {
-    // Hide all sections first
-    const sections = document.querySelectorAll('#demo, #play');
-    sections.forEach(section => {
-        section.style.display = 'none';
-    });
-
-    // Show the selected one
-    const selected = document.getElementById(sectionId);
-    if (selected) {
-        selected.style.display = 'block';
-    }
-}
-
-const pacmanSection = document.querySelector('.Pacman-section');
-
-if (!pacmanSection) {
-  console.error("Pacman section not found!");
-} else {
-  for (let i = 0; i < 50; i++) {
-    const pixel = document.createElement('div');
-    pixel.classList.add('pixel');
-
-    pixel.style.left = Math.random() * 100 + '%';
-
-    const duration = 4 + Math.random() * 6;
-    pixel.style.animationDuration = duration + 's';
-
-    pixel.style.animationDelay = Math.random() * 5 + 's';
-    pixel.style.opacity = Math.random() * 0.5 + 0.2;
-
-    pacmanSection.appendChild(pixel);
+  function syncTabs() {
+    tabs.forEach(t => t.classList.toggle('open', !document.getElementById(t.dataset.win).classList.contains('closed')));
   }
+
+  function focusWin(win) {
+    wins.forEach(w => w.classList.toggle('focused', w === win));
+    win.style.zIndex = ++topZ;
+  }
+
+  function openWin(win) {
+    win.classList.remove('closed');
+    focusWin(win);
+    syncTabs();
+  }
+
+  wins.forEach(win => {
+    win.addEventListener('pointerdown', () => focusWin(win));
+    win.querySelectorAll('[data-close]').forEach(btn =>
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        win.classList.add('closed');
+        syncTabs();
+      })
+    );
+  });
+
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    const win = document.getElementById(tab.dataset.win);
+    if (win.classList.contains('closed')) openWin(win);
+    else focusWin(win);
+  }));
+
+  document.querySelector('[data-open-all]').addEventListener('click', () => wins.forEach(openWin));
+
+  // drag windows by their title bar (desktop layout only)
+  const canDrag = window.matchMedia('(min-width: 901px) and (pointer: fine)');
+  wins.forEach(win => {
+    const bar = win.querySelector('.win-title');
+    let startX, startY, baseX = 0, baseY = 0;
+
+    bar.addEventListener('pointerdown', e => {
+      if (!canDrag.matches || e.target.closest('button')) return;
+      startX = e.clientX - baseX;
+      startY = e.clientY - baseY;
+      win.classList.add('dragging');
+      bar.setPointerCapture(e.pointerId);
+    });
+    bar.addEventListener('pointermove', e => {
+      if (!win.classList.contains('dragging')) return;
+      baseX = e.clientX - startX;
+      baseY = e.clientY - startY;
+      win.style.translate = `${baseX}px ${baseY}px`;
+    });
+    const stop = () => win.classList.remove('dragging');
+    bar.addEventListener('pointerup', stop);
+    bar.addEventListener('pointercancel', stop);
+  });
+
+  function tick() {
+    clock.textContent = new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
+  tick();
+  setInterval(tick, 15000);
+
+  // initial stacking: the results pop-up sits on top
+  ['win-notes', 'win-main', 'win-video', 'win-dialog'].forEach(id => focusWin(document.getElementById(id)));
+  syncTabs();
 }
-const strip = document.querySelector('.moon-strip-inner');
-const images = Array.from(strip.children);
 
-// Duplicate all images to make seamless loop
-images.forEach(img => {
-  const clone = img.cloneNode(true);
-  clone.src = img.src; // make sure src is preserved
-  strip.appendChild(clone);
+/* =====================
+   COPY EMAIL
+   ===================== */
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const label = btn.textContent;
+    try {
+      await navigator.clipboard.writeText(btn.dataset.copy);
+      btn.textContent = 'Copied';
+    } catch {
+      btn.textContent = 'Press ⌘C';
+    }
+    setTimeout(() => btn.textContent = label, 1800);
+  });
 });
-
-// Add class to trigger animation AFTER duplication
-strip.classList.add('scrolling');

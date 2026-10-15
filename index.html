@@ -1,264 +1,439 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Chana346</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chantelle Troutman</title>
+  <meta name="description" content="Chantelle Troutman — Computer Science student at UC Santa Cruz. Projects, experience, and contact.">
 
-    <link rel="stylesheet" href="chana.css">
-    <script src="chana.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="chana.css">
+  <script src="chana.js" defer></script>
 </head>
 
 <body>
 
 <!-- NAVBAR -->
-  <nav>
-    <ul class="nav-links">
+<nav>
+  <ul class="nav-links">
+    <li><a href="#top">Home</a></li>
+    <li><a href="assets/Chantelle_Troutman_Resume-2.pdf" target="_blank">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
 
-        <li><a href="index.html">Home</a></li>
-       <!-- <li><a href="pictures.html">Pictures</a></li>-->
-        <li><a href="assets/Chantelle_Troutman_Resume-2.pdf" target="_blank">Resume</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="projects.html">Projects</a></li>
-        <li><a href="Experience.html">Experience</a></li>
-
-        <li class="social">
-            <a href="https://www.linkedin.com/in/chantelle-troutman-b953033a5/" target="_blank">
-              <img src="../linkedInd.png" alt="LinkedIn">
-            </a>
-            <a href="https://github.com/chana3466" target="_blank">
-              <img src="../github.png" alt="GitHub">
-            </a>
-        </li>
-
-    </ul>
-  </nav>
+    <li class="social">
+      <a href="https://www.linkedin.com/in/chantelle-troutman-b953033a5/" target="_blank">
+        <img src="linkedInd.png" alt="LinkedIn">
+      </a>
+      <a href="https://github.com/chana3466" target="_blank">
+        <img src="github.png" alt="GitHub">
+      </a>
+    </li>
+  </ul>
+</nav>
 
 
-<!-- HERO VIDEO -->
-  <section class="hero">
+<!-- HERO VIDEO (unchanged) -->
+<section class="hero" id="top">
 
-    <video autoplay muted loop class="bg-video">
-        <source src="assets/HomeVideo.mp4" type="video/mp4" >
-    </video>
+  <video autoplay muted loop playsinline class="bg-video">
+    <source src="assets/HomeVideo.mp4" type="video/mp4">
+  </video>
 
-    <div class="overlay"></div>
+  <div class="overlay"></div>
 
-    <div class="hero-content">
-        <h1>Chantelle Troutman</h1>
-        <h2>Computer Science Student</h2>
-        <p>University of California, Santa Cruz</p>
-    </div>
-
-  </section>
-
-
-<!-- SKILLS SECTION -->
-  <section class="skills-section">
-    <div class="skills-dots" id="skills-dots">
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-      <span class="sdot"></span>
-    </div>
-    <h2 class="skills-title">Technical Skills</h2>
-    <div class="skills-grid">
-      <div class="skill-card reveal">
-        <h3> Languages</h3>
-        <ul>
-          <li>C</li>
-          <li>Python</li>
-          <li>Java</li>
-          <li>JavaScript</li>
-          <li>Haskell</li>
-          <li>HTML / CSS</li>
-        </ul>
-      </div>
-      <div class="skill-card reveal">
-        <h3>Tools</h3>
-        <ul>
-          <li>Git / GitHub</li>
-          <li>VS Code</li>
-          <li>Android Studio</li>
-        </ul>
-      </div>
-      <div class="skill-card reveal">
-        <h3> Concepts</h3>
-        <ul>
-          <li>Data Structures</li>
-          <li>Machine Learning</li>
-          <li>Functional Programming</li>
-          <li>Assembly</li>
-        </ul>
-      </div>
-      <div class="skill-card reveal">
-        <h3> Crafts</h3>
-        <ul>
-          <li>Welding</li>
-          <li>Sewing</li>
-          <li>Knitting</li>
-          <li>Fabrication</li>
-        </ul>
-      </div>
-    </div>
-
-  </section>
-  <div class="moon-strip">
-    <div class="moon-strip-inner scrolling">
-      <div class="moon-img-wrapper"><img src="/assets/moon1.png" alt="Moon 1"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon2.png" alt="Moon 2"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon1.png" alt="Moon 1"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon2.png" alt="Moon 2"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon1.png" alt="Moon 1"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon2.png" alt="Moon 2"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon1.png" alt="Moon 1"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon2.png" alt="Moon 2"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon1.png" alt="Moon 1"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon2.png" alt="Moon 2"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon1.png" alt="Moon 1"></div>
-      <div class="moon-img-wrapper"><img src="/assets/moon2.png" alt="Moon 2"></div>
-      <!-- repeat as needed -->
-    </div>
+  <div class="hero-content">
+    <h1>Chantelle Troutman</h1>
+    <h2>Computer Science Student</h2>
+    <p>University of California, Santa Cruz</p>
   </div>
-  <section class="Luna-section">
 
-    <div class="Luna-layout">
-  
-      <!-- LEFT SIDE -->
-      <div class="Luna-left">
-  
-        <!-- Summary -->
-        <div class="Luna-summary">
-          <div class="Luna-summary-inner">
-            <span class="Luna-tag">Senior Thesis · Phase 1</span>
-            <h2 class="Luna-title">Luna Yoga</h2>
-            <p class="Luna-subtitle">
-              The app aims to integrate moon phases and menstrual cycles with yoga practices to provide a personalized wellness experience. 
-              In Phase 1, the focus was on developing the front-end interface, allowing users to view and interact with the core features. 
-              All visual elements and navigation are now fully implemented, laying the foundation for future phases where recommendations 
-              and personalized experiences will be added.
-            </p>
-            <div class="Luna-meta">
-              <span>React Native · Node.js · Supabase</span>
-              <span>2025</span>
-              <span>Solo Project</span>
+</section>
+
+
+<main>
+
+  <!-- INTRO -->
+  <section class="intro" id="about">
+    <div class="wrap">
+      <div class="masthead reveal">
+        <h2 class="display">
+          <span class="sans">CODE &amp;</span> <span class="serif">Craft</span>
+        </h2>
+        <a href="#projects" class="read-all">See the work</a>
+      </div>
+
+      <div class="intro-grid">
+        <div class="intro-text reveal">
+          <p class="lede">
+            I'm a computer science student at UC Santa Cruz who also welds, sews, and knits.
+            I like building things one careful piece at a time &mdash; whether that's an app, an AI agent, or a sweater.
+          </p>
+          <p>
+            I work mostly in Java and Python, and lately I've been digging into machine learning, AI,
+            and how programming languages work. Before college I was programming lead on my high school
+            robotics team, and I played competitive soccer.
+          </p>
+        </div>
+
+        <div class="intro-collage reveal" aria-hidden="true">
+          <img src="assets/moon-bg.png" alt="" class="shape-arch collage-a">
+          <img src="assets/pinkPattern.png" alt="" class="shape-blob collage-b">
+        </div>
+      </div>
+
+      <dl class="facts reveal">
+        <div><dt>Studying</dt><dd>B.S. Computer Science</dd></div>
+        <div><dt>Graduating</dt><dd>June 2027</dd></div>
+        <div><dt>Based in</dt><dd>Santa Cruz, CA</dd></div>
+        <div><dt>Off the clock</dt><dd>Welding · Sewing · Knitting</dd></div>
+      </dl>
+    </div>
+  </section>
+
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+
+    <div class="wrap">
+      <header class="section-title reveal">
+        <h2 class="display"><span class="sans">SELECTED</span> <span class="serif">Work</span></h2>
+        <span class="section-count">(03)</span>
+      </header>
+    </div>
+
+    <!-- LUNA -->
+    <article class="Luna-section">
+      <div class="wrap Luna-layout">
+
+        <div class="Luna-left reveal">
+          <span class="kicker">01 — Senior Thesis · Phase 1</span>
+          <h3 class="Luna-title">Luna Yoga</h3>
+          <p class="Luna-subtitle">
+            An app that pairs moon phases and menstrual cycles with yoga practice for a personalized wellness experience.
+            Phase 1 built the full front end &mdash; every screen, visual, and navigation flow &mdash; laying the groundwork
+            for the recommendation engine coming in later phases.
+          </p>
+
+          <table class="spec">
+            <tr><th>Stack</th><td>React Native · Node.js · Supabase</td></tr>
+            <tr><th>Year</th><td>2025</td></tr>
+            <tr><th>Role</th><td>Solo project</td></tr>
+          </table>
+
+          <div class="Luna-descriptions" aria-live="polite">
+            <div class="Luna-desc active">
+              <span class="Luna-screen-num">01 / 04</span>
+              <h4>Login</h4>
+              <p>Minimal login with secure authentication.</p>
+            </div>
+            <div class="Luna-desc">
+              <span class="Luna-screen-num">02 / 04</span>
+              <h4>Collective</h4>
+              <p>Dashboard with streaks and recommendations.</p>
+            </div>
+            <div class="Luna-desc">
+              <span class="Luna-screen-num">03 / 04</span>
+              <h4>Settings</h4>
+              <p>Customize the experience and preferences.</p>
+            </div>
+            <div class="Luna-desc">
+              <span class="Luna-screen-num">04 / 04</span>
+              <h4>Yoga Types</h4>
+              <p>Explore yoga styles and sessions.</p>
+            </div>
+          </div>
+
+          <div class="Luna-controls">
+            <button class="Luna-prev" aria-label="Previous screen">&#8592; Prev</button>
+            <button class="Luna-next" aria-label="Next screen">Next &#8594;</button>
+          </div>
+        </div>
+
+        <div class="Luna-stage reveal">
+          <img src="assets/light.png" alt="" class="Luna-backdrop shape-arch" aria-hidden="true">
+          <div class="Luna-images">
+            <div class="Luna-track">
+              <div class="Luna-card"><img src="assets/Luna/Login.png" alt="Luna Yoga login screen"></div>
+              <div class="Luna-card"><img src="assets/Luna/collective.png" alt="Luna Yoga collective dashboard"></div>
+              <div class="Luna-card"><img src="assets/Luna/Settings.png" alt="Luna Yoga settings screen"></div>
+              <div class="Luna-card"><img src="assets/Luna/YogaTypes.png" alt="Luna Yoga yoga types screen"></div>
             </div>
           </div>
         </div>
-  
-        <!-- Descriptions -->
-        <div class="Luna-descriptions">
-          <div class="Luna-desc active">
-            <span class="Luna-screen-num">01 / 04</span>
-            <h3>Login Screen</h3>
-            <p>Minimal login with secure authentication.</p>
-          </div>
-  
-          <div class="Luna-desc">
-            <span class="Luna-screen-num">02 / 04</span>
-            <h3>Collective</h3>
-            <p>Dashboard with streaks and recommendations.</p>
-          </div>
-  
-          <div class="Luna-desc">
-            <span class="Luna-screen-num">03 / 04</span>
-            <h3>Settings</h3>
-            <p>Customize experience and preferences.</p>
-          </div>
-  
-          <div class="Luna-desc">
-            <span class="Luna-screen-num">04 / 04</span>
-            <h3>Yoga Types</h3>
-            <p>Explore yoga styles and sessions.</p>
-          </div>
-        </div>
-  
+
       </div>
-  
-      <!-- CENTER CAROUSEL -->
-      <div class="Luna-carousel">
-        <button class="Luna-prev">&#8592;</button>
-        <div class="Luna-images">
-  
-          <div class="Luna-track">
-            <div class="Luna-card"><img src="assets/Luna/Login.png"></div>
-            <div class="Luna-card"><img src="assets/Luna/collective.png"></div>
-            <div class="Luna-card"><img src="assets/Luna/Settings.png"></div>
-            <div class="Luna-card"><img src="assets/Luna/YogaTypes.png"></div>
+    </article>
+
+    <!-- PAC-MAN — retro desktop -->
+    <article class="Pacman-section">
+      <div class="wrap">
+
+        <div class="taskbar reveal">
+          <button class="start-btn" data-open-all><span class="start-logo" aria-hidden="true"></span>Start</button>
+          <div class="taskbar-tabs">
+            <button class="task-tab" data-win="win-main">pacman_ctf.exe</button>
+            <button class="task-tab" data-win="win-video">demo.mov</button>
+            <button class="task-tab" data-win="win-notes">walkthrough.txt</button>
+            <button class="task-tab" data-win="win-dialog">results</button>
           </div>
+          <span class="taskbar-clock" aria-hidden="true"></span>
         </div>
-        
-        <button class="Luna-next">&#8594;</button>
-        <div class="Luna-dots"></div>
+
+        <div class="desktop">
+
+          <!-- main window -->
+          <section class="win win-main reveal" id="win-main">
+            <header class="win-title">
+              <span>PACMAN_CTF.exe</span>
+              <span class="win-btns"><button aria-label="Minimize" data-close>_</button><button aria-label="Maximize" tabindex="-1">□</button><button aria-label="Close" data-close>×</button></span>
+            </header>
+            <nav class="win-menu" aria-hidden="true"><u>F</u>ile <u>E</u>dit <u>V</u>iew <u>H</u>elp</nav>
+            <div class="win-body game-screen">
+              <span class="game-kicker">02 — Capstone · CSE 140</span>
+              <h3 class="Pacman-title">PacMan: Capture the Flag</h3>
+              <p class="Pacman-subtitle">
+                Built intelligent agents for a competitive Capture-the-Flag variant of Pac-Man &mdash; offensive and
+                defensive agents making strategic decisions in a dynamic, adversarial world. We used A* search for
+                real-time pathfinding, and our team placed <span class="hl">5th</span> in the final tournament.
+              </p>
+              <a href="assets/Report.pdf" target="_blank" class="w95-btn">Written Report.pdf</a>
+            </div>
+            <footer class="win-status"><span>Agents: 2</span><span>Search: A*</span><span>Team: Red</span></footer>
+          </section>
+
+          <!-- media player -->
+          <section class="win win-video reveal" id="win-video">
+            <header class="win-title">
+              <span>demo.mov — Media Player</span>
+              <span class="win-btns"><button aria-label="Minimize" data-close>_</button><button aria-label="Maximize" tabindex="-1">□</button><button aria-label="Close" data-close>×</button></span>
+            </header>
+            <nav class="win-menu" aria-hidden="true"><u>F</u>ile <u>E</u>dit <u>E</u>ffects <u>H</u>elp</nav>
+            <div class="win-body video-body">
+              <video autoplay muted loop playsinline controls>
+                <source src="assets/Videos/PacMan.mov" type="video/mp4">
+              </video>
+            </div>
+            <footer class="win-status"><span>Red team vs. baseline blue</span><span>Playing</span></footer>
+          </section>
+
+          <!-- notepad -->
+          <section class="win win-notes reveal" id="win-notes">
+            <header class="win-title">
+              <span>walkthrough.txt — Notepad</span>
+              <span class="win-btns"><button aria-label="Minimize" data-close>_</button><button aria-label="Maximize" tabindex="-1">□</button><button aria-label="Close" data-close>×</button></span>
+            </header>
+            <nav class="win-menu" aria-hidden="true"><u>F</u>ile <u>E</u>dit <u>S</u>earch <u>H</u>elp</nav>
+            <div class="win-body notepad">
+              <h4>Demo Walkthrough</h4>
+              <p>
+                The <span class="red">red team</span> navigates the maze in real time using <strong>A*</strong>.
+                The offensive agent collects food and goes for the flag while the defensive agent guards home territory
+                and intercepts opponents.
+              </p>
+              <p>
+                It shows risk assessment, threat evaluation, and cooperative behavior &mdash; the red agents are built
+                to outplay the <strong class="blue">baseline blue team</strong>.
+              </p>
+            </div>
+          </section>
+
+          <!-- dialog -->
+          <section class="win win-dialog reveal" id="win-dialog" role="dialog" aria-label="Tournament results">
+            <header class="win-title">
+              <span>Tournament Results</span>
+              <span class="win-btns"><button aria-label="Close" data-close>×</button></span>
+            </header>
+            <div class="win-body dialog-body">
+              <span class="dialog-icon" aria-hidden="true">!</span>
+              <p>Your agents placed <strong>5th</strong> in the final tournament.</p>
+            </div>
+            <div class="dialog-actions"><button class="w95-btn" data-close>OK</button></div>
+          </section>
+
+        </div>
       </div>
-      
+    </article>
+
+    <!-- ECOSPOOL — editorial row -->
+    <div class="wrap">
+      <article class="row-feature reveal">
+        <div class="row-text">
+          <span class="kicker">03 — EECCOA Challenge · 2023</span>
+          <h3>EcoSpool</h3>
+          <p>
+            A system that collects plastic water bottles on campus and recycles them into spools of 3D-printer filament.
+            Named a finalist in the 2023 EECCOA Challenge.
+          </p>
+        </div>
+        <div class="arches" aria-hidden="true">
+          <img src="assets/wave.png" alt="">
+          <img src="assets/wave.png" alt="">
+          <img src="assets/wave.png" alt="">
+        </div>
+      </article>
     </div>
-  
+
   </section>
 
-  <section class="Pacman-section">
 
-    <!-- Summary stays on top -->
-    <div class="Luna-summary">
-      <div class="Pacman-summary-inner">
-        <span class="Luna-tag">Capstone Class/Project · CSE140</span>
-        <h2 class="Pacman-title">PacMan: Capture the Flag</h2>
-        <p class="Pacman-subtitle">
-          Developed intelligent agents for a competitive Capture the Flag variant of Pac-Man.
-          The project required designing both offensive and defensive agents capable of
-          strategic decision-making in a dynamic, adversarial environment. Our team implemented
-          the A* search algorithm to optimize pathfinding and real-time gameplay decisions.
-          The agents successfully competed against other teams, earning 5th place in the final tournament.
-        </p>
-        <a href="assets/Report.pdf" target="_blank" class="pacman-btn" >Written Report</a>
-        
+  <!-- EXPERIENCE -->
+  <section class="experience" id="experience">
+    <div class="wrap">
+
+      <div class="banner reveal">
+        <img src="assets/contact.png" alt="" aria-hidden="true">
+        <div class="banner-text">
+          <h2>EXPERIENCE</h2>
+          <ul>
+            <li>Software</li>
+            <li>Data &amp; Automation</li>
+            <li>Santa Cruz / Ventura</li>
+            <li>&copy;2026</li>
+          </ul>
+        </div>
       </div>
-      
+
+      <div class="cv-grid">
+
+        <div class="cv-card reveal">
+          <ol class="cv-list">
+            <li>
+              <span class="cv-n">1</span>
+              <span class="cv-org">Rated Sports</span>
+              <span class="cv-role">Data Entry / Marketing Graphic Assistant</span>
+              <span class="cv-date">2025 — Now</span>
+            </li>
+            <li>
+              <span class="cv-n">2</span>
+              <span class="cv-org">FileYourTaxes.com</span>
+              <span class="cv-role">Software Intern</span>
+              <span class="cv-date">Summer 2023</span>
+            </li>
+            <li>
+              <span class="cv-n">3</span>
+              <span class="cv-org">Santa Clara River Conservancy</span>
+              <span class="cv-role">Ecological Restoration Intern</span>
+              <span class="cv-date">Spring 2023</span>
+            </li>
+          </ol>
+          <h3 class="cv-label">CV</h3>
+        </div>
+
+        <div class="cv-card reveal">
+          <div class="cv-detail">
+            <p class="cv-summary">
+              B.S. Computer Science at UC Santa Cruz. Coursework in data structures &amp; algorithms, computer
+              architecture, assembly, discrete math, machine learning, AI, and programming languages.
+            </p>
+            <ol class="cv-list">
+              <li>
+                <span class="cv-n">1</span>
+                <span class="cv-org">UC Santa Cruz</span>
+                <span class="cv-role">B.S. Computer Science</span>
+                <span class="cv-date">2027</span>
+              </li>
+              <li>
+                <span class="cv-n">2</span>
+                <span class="cv-org">Ventura High School</span>
+                <span class="cv-role">Robotics programming lead · Cybersecurity team</span>
+                <span class="cv-date">2023</span>
+              </li>
+            </ol>
+          </div>
+          <h3 class="cv-label">EDUCATION</h3>
+        </div>
+
+        <div class="cv-card reveal">
+          <div class="skill-cols">
+            <div>
+              <h4>Languages</h4>
+              <p>C, Python, Java, JavaScript, Haskell, HTML / CSS</p>
+            </div>
+            <div>
+              <h4>Tools</h4>
+              <p>Git, VS Code, Android Studio, React Native, Supabase</p>
+            </div>
+            <div>
+              <h4>Concepts</h4>
+              <p>Data structures, machine learning, functional programming, assembly, lambda calculus</p>
+            </div>
+            <div>
+              <h4>Crafts</h4>
+              <p>Welding, sewing, knitting, fabrication</p>
+            </div>
+          </div>
+          <h3 class="cv-label">SKILLS</h3>
+        </div>
+
+        <div class="cv-card reveal">
+          <div class="cv-detail">
+            <ul class="cv-notes">
+              <li>
+                <strong>Rated Sports</strong> &mdash; wrote scripts that turn structured PDF data into Excel,
+                automated repetitive work, and supported front-end web development.
+              </li>
+              <li>
+                <strong>FileYourTaxes.com</strong> &mdash; helped turn the tax-filing site into an Android app:
+                UI components, API requests, and data parsing.
+              </li>
+              <li>
+                <strong>Faculty Choice Award</strong> &mdash; Applied Arts: welding/fabrication, AP CS, honors robotics,
+                and field studies.
+              </li>
+            </ul>
+          </div>
+          <h3 class="cv-label">NOTES</h3>
+        </div>
+
+      </div>
     </div>
-    <div class="pacman-wall"></div>
-  
-    <!-- Demo section: Video + description -->
-    <div class="Pacman-demo-layout">
-  
-      <!-- LEFT: Video -->
-      <div class="Pacman-video">
-        <video autoplay muted loop playsinline width="600" controls>
-          <source src="assets/Videos/PacMan.mov" type="video/mp4">
-        </video>
-      </div>
-  
-      <!-- RIGHT: Demo description -->
-      <div class="Pacman-demo-description">
-        <h3 style="font-family: 'retro', sans-serif;">Demo Walkthrough</h3>
-        <p style="font-family: 'retro', sans-serif;">
-          In this demo, the agents on the <strong>red team</strong> navigate the maze in real-time using <strong>A*</strong> pathfinding. 
-          The offensive agent focuses on collecting food and capturing the opponent’s flag, while the defensive agent guards 
-          our territory and intercepts opponents. Watch how A* allows intelligent movement around obstacles and dynamically reacts to the blue team’s actions.
-        </p>
-        <p style="font-family: 'retro', sans-serif;color: lightblue">
-          This setup highlights key AI strategies such as risk assessment, threat evaluation, and cooperative behavior. 
-          The red team agents are designed to outperform the <strong>baseline blue team</strong>, demonstrating both competitive dynamics and advanced AI decision-making in a live game environment.
-        </p>
-      </div>
-  
-    </div>
-  
   </section>
+
+
+  <!-- CONTACT — "Waves" magazine cover -->
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+
+      <div class="cover reveal">
+        <h2 class="cover-title">Contact</h2>
+        <div class="cover-frame">
+          <img src="assets/wave.png" alt="" aria-hidden="true">
+        </div>
+      </div>
+
+      <div class="contact-info reveal">
+        <span class="kicker">Get in touch</span>
+        <p class="contact-lede">
+          Open to internships, collaborations, and conversations about code or craft.
+        </p>
+        <a href="mailto:chantelletroutman4@gmail.com" class="email-link">chantelletroutman4@gmail.com</a>
+        <button class="copy-btn" data-copy="chantelletroutman4@gmail.com">Copy email</button>
+
+        <table class="spec contact-spec">
+          <tr><th>GitHub</th><td><a href="https://github.com/chana3466" target="_blank">chana3466 ↗</a></td></tr>
+          <tr><th>LinkedIn</th><td><a href="https://www.linkedin.com/in/chantelle-troutman-b953033a5/" target="_blank">Chantelle Troutman ↗</a></td></tr>
+          <tr><th>Instagram</th><td><a href="https://www.instagram.com/chana346/" target="_blank">@chana346 ↗</a></td></tr>
+          <tr><th>Resume</th><td><a href="assets/Chantelle_Troutman_Resume-2.pdf" target="_blank">Download PDF ↗</a></td></tr>
+        </table>
+      </div>
+
+    </div>
+
+    <footer class="footer">
+      <img src="assets/fish.png" alt="" class="footer-fish" aria-hidden="true">
+      <div class="footer-row">
+        <span>&copy; 2026 Chantelle Troutman</span>
+        <a href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+  </section>
+
+</main>
 
 </body>
 </html>
