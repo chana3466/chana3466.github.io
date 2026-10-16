@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Information Security Analyst Job Simulation — Field Notes</title>
+  <meta name="description" content="AIG Shields Up: Cybersecurity job simulation on Forage — triaging a CISA-listed vulnerability and writing a password-recovery script.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../chana.css">
+  <script src="../chana.js" defer></script>
+</head>
+
+<body class="blog-page">
+
+<nav>
+  <ul class="nav-links">
+    <li><a href="../index.html#top">Home</a></li>
+    <li><a href="../assets/Chantelle_Troutman_Resume-2.pdf" target="_blank">Resume</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="../index.html#experience">Experience</a></li>
+    <li><a href="../blog.html" class="active">Blog</a></li>
+    <li class="social">
+      <a href="https://www.linkedin.com/in/chantelle-troutman-b953033a5/" target="_blank"><img src="../linkedInd.png" alt="LinkedIn"></a>
+      <a href="https://github.com/chana3466" target="_blank"><img src="../github.png" alt="GitHub"></a>
+    </li>
+  </ul>
+</nav>
+
+<main class="post">
+  <article class="wrap post-wrap">
+
+    <a href="../blog.html" class="post-back">← All posts</a>
+
+    <header class="post-header">
+      <span class="kicker">Lab Write-up · <time datetime="2026-10-16">Oct 16, 2026</time></span>
+      <h1 class="post-h1">Information Security Analyst Job Simulation</h1>
+      <p class="post-dek">Two tasks that mirror the day-to-day of a security team: triaging a real CISA-listed vulnerability for a project lead, then recovering a locked file with a password-recovery script.</p>
+    </header>
+
+    <table class="spec post-spec">
+      <tr><th>Simulation</th><td>AIG — Shields Up: Cybersecurity (Forage)</td></tr>
+      <tr><th>Role</th><td>Information Security Analyst</td></tr>
+      <tr><th>Focus</th><td>Vulnerability triage · communication · scripting</td></tr>
+      <tr><th>Tools</th><td>CISA Known Exploited Vulnerabilities catalog · Python</td></tr>
+    </table>
+
+    <div class="prose">
+      <div class="callout">
+        <strong>Note:</strong> No deliverables or finished code here &mdash; Forage asks you not to share solutions. This is about how I approached the work and what I took away from it.
+      </div>
+
+      <h2>The scenario</h2>
+      <p>
+        I stepped into the role of an information security analyst on AIG's cybersecurity and information
+        security team for their <em>Shields Up: Cybersecurity</em> simulation. It was built around two very
+        different parts of the job: the first was about
+        <em>communicating</em> a security risk to someone who isn't a security person, and the second was about
+        <em>building a small tool</em> to solve a hands-on problem. I liked that it paired those, because real
+        security work is rarely only one or the other.
+      </p>
+
+      <h2>Task 1 — Triaging a CISA-listed vulnerability</h2>
+      <p>
+        The first task had me review CISA's (the Cybersecurity and Infrastructure Security Agency) recent list of
+        vulnerabilities &mdash; their Known Exploited Vulnerabilities catalog, which tracks flaws that are actively
+        being used in attacks in the wild. I identified one that affected an asset our project lead owned, then
+        drafted an email to inform them about it.
+      </p>
+      <p>The email had to do three things, and getting the balance right was the real exercise:</p>
+      <ul>
+        <li><strong>Explain the vulnerability in plain language</strong> &mdash; what it is and why it matters, without drowning a non-technical reader in jargon.</li>
+        <li><strong>Give background and context</strong> &mdash; that it was on CISA's actively-exploited list, which raises the urgency from "patch eventually" to "patch now."</li>
+        <li><strong>Lay out the steps to secure the asset</strong> &mdash; concrete, ordered actions the project lead could actually take.</li>
+      </ul>
+      <p>
+        The thing I kept reminding myself: the goal wasn't to prove I understood the CVE. It was to get a busy
+        person to act. So I led with the risk and the deadline, kept the explanation short, and put the remediation
+        steps where they'd be easy to find.
+      </p>
+
+      <h2>Task 2 — A password-recovery script</h2>
+      <p>
+        The second task was more technical. I was given an encrypted ZIP file and a list of common passwords, and
+        asked to write a script that works through the list to recover the one that opens the archive. This is a
+        dictionary-based approach: rather than trying every possible combination, you test a curated list of
+        likely passwords until one succeeds.
+      </p>
+      <p>At a high level, my approach was:</p>
+      <ul>
+        <li>Read the password list line by line, so I was testing one candidate at a time.</li>
+        <li>Attempt to open the archive with each candidate inside a <code>try</code>/<code>except</code> block, since a wrong password raises an error rather than returning a flag.</li>
+        <li>Stop as soon as an attempt succeeded, and report which password worked.</li>
+      </ul>
+      <p>The shape of the loop looked something like this (the real work is reading the file and handling the errors cleanly):</p>
+      <pre><code>for candidate in password_list:
+    try:
+        archive.extractall(pwd=candidate)
+        print("Recovered:", candidate)
+        break
+    except RuntimeError:
+        continue   # wrong password, keep going</code></pre>
+      <p>
+        It worked because the password was a common, weak one that lived in the supplied list &mdash; which is
+        exactly the point of the exercise.
+      </p>
+
+      <h2>How I'd defend against it</h2>
+      <p>
+        Writing the recovery script made the defensive lesson obvious. A dictionary attack only works when the
+        password is guessable, so on the defending side you'd:
+      </p>
+      <ul>
+        <li>Require <strong>long, unique passphrases</strong> so a common-password list never contains them.</li>
+        <li>Not rely on ZIP encryption alone for sensitive data &mdash; use strong, modern encryption and share secrets through a proper channel, not a password everyone can guess.</li>
+        <li>Rate-limit or lock out repeated failed attempts wherever the file or system allows it, so brute-forcing isn't free.</li>
+      </ul>
+
+      <h2>What I took away</h2>
+      <p>
+        The two tasks reinforced each other. Task 1 was a reminder that a vulnerability isn't handled until the
+        person who owns the asset understands it and acts &mdash; communication <em>is</em> the security control.
+        Task 2 showed, from the attacker's side, exactly why weak passwords are dangerous, which makes the advice
+        I'd give as a defender a lot more convincing.
+      </p>
+
+      <h2>Going further</h2>
+      <p>
+        I want to rebuild the recovery script on a ZIP I encrypt myself, and time how the dictionary approach
+        scales as the password gets longer and less common &mdash; a concrete way to see where "just use a longer
+        passphrase" stops an attack in its tracks.
+      </p>
+    </div>
+
+  </article>
+</main>
+
+<footer class="footer blog-footer">
+  <div class="footer-row">
+    <span>&copy; 2026 Chantelle Troutman</span>
+    <a href="../blog.html">All posts →</a>
+  </div>
+</footer>
+
+</body>
+</html>

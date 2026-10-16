@@ -13,6 +13,10 @@ const sectionObserver = new IntersectionObserver(entries => {
 
 sections.forEach(s => sectionObserver.observe(s));
 
+// on narrow screens the tab row scrolls sideways — bring the current page's tab into view
+const currentTab = document.querySelector('nav a.active:not([href^="#"])');
+if (currentTab) currentTab.scrollIntoView({ block: 'nearest', inline: 'center' });
+
 /* =====================
    SCROLL REVEAL
    ===================== */
@@ -147,3 +151,46 @@ document.querySelectorAll('.copy-btn').forEach(btn => {
     setTimeout(() => btn.textContent = label, 1800);
   });
 });
+
+/* =====================
+   BLOG — filter tabs, series counts, empty state
+   ===================== */
+const postList = document.querySelector('.post-list');
+if (postList) {
+  const rows    = [...postList.querySelectorAll('.post-row')];
+  const filters = document.querySelectorAll('.filter');
+  const empty   = document.querySelector('.empty-state');
+
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const n = rows.filter(r => r.dataset.category === el.dataset.count).length;
+    el.textContent = n === 0 ? 'Coming soon' : `${n} post${n === 1 ? '' : 's'}`;
+  });
+
+  function applyFilter(cat) {
+    let shown = 0;
+    rows.forEach(r => {
+      const match = cat === 'all' || r.dataset.category === cat;
+      r.hidden = !match;
+      if (match) shown++;
+    });
+    empty.hidden = shown > 0;
+    filters.forEach(f => {
+      const on = f.dataset.filter === cat;
+      f.classList.toggle('active', on);
+      f.setAttribute('aria-selected', on);
+    });
+  }
+
+  filters.forEach(f => f.addEventListener('click', () => {
+    applyFilter(f.dataset.filter);
+    history.replaceState(null, '', f.dataset.filter === 'all' ? location.pathname : '#' + f.dataset.filter);
+  }));
+
+  // blog.html#lab etc. opens straight to that series (also used by the series cards)
+  const filterFromHash = () => {
+    const h = location.hash.slice(1);
+    applyFilter(['cert', 'paper', 'lab'].includes(h) ? h : 'all');
+  };
+  window.addEventListener('hashchange', filterFromHash);
+  filterFromHash();
+}

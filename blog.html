@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Field Notes — Chantelle Troutman</title>
+  <meta name="description" content="Chantelle Troutman's security blog: certification progress, research paper reviews, and lab write-ups.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="chana.css">
+  <script src="chana.js" defer></script>
+</head>
+
+<body class="blog-page">
+
+<!-- NAVBAR -->
+<nav>
+  <ul class="nav-links">
+    <li><a href="index.html#top">Home</a></li>
+    <li><a href="assets/Chantelle_Troutman_Resume-2.pdf" target="_blank">Resume</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="index.html#projects">Projects</a></li>
+    <li><a href="index.html#experience">Experience</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+
+    <li class="social">
+      <a href="https://www.linkedin.com/in/chantelle-troutman-b953033a5/" target="_blank">
+        <img src="linkedInd.png" alt="LinkedIn">
+      </a>
+      <a href="https://github.com/chana3466" target="_blank">
+        <img src="github.png" alt="GitHub">
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<main class="blog">
+  <div class="wrap">
+
+    <!-- MASTHEAD -->
+    <header class="masthead blog-masthead">
+      <h1 class="display"><span class="sans">FIELD</span> <span class="serif">Notes</span></h1>
+      <span class="blog-tagline">A CS student breaking into cybersecurity, in public.</span>
+    </header>
+
+    <!-- THE THREE SERIES -->
+    <section class="series" aria-label="Series">
+      <a class="series-card" href="#cert">
+        <span class="series-num">01</span>
+        <h2>Cert Progress</h2>
+        <p>Notes from studying for security certifications &mdash; what I covered, what clicked, and what's still fuzzy.</p>
+        <span class="series-count" data-count="cert"></span>
+      </a>
+      <a class="series-card" href="#paper">
+        <span class="series-num">02</span>
+        <h2>Paper Reviews</h2>
+        <p>Plain-language breakdowns of security research papers: the problem, the method, and whether I buy it.</p>
+        <span class="series-count" data-count="paper"></span>
+      </a>
+      <a class="series-card" href="#lab">
+        <span class="series-num">03</span>
+        <h2>Lab Write-ups</h2>
+        <p>Hands-on labs, CTFs, and job simulations &mdash; how I approached them and what I'd defend against.</p>
+        <span class="series-count" data-count="lab"></span>
+      </a>
+    </section>
+
+    <!-- FILTERS -->
+    <div class="filters" role="tablist" aria-label="Filter posts">
+      <button class="filter active" data-filter="all" role="tab" aria-selected="true">All</button>
+      <button class="filter" data-filter="cert" role="tab" aria-selected="false">Cert Progress</button>
+      <button class="filter" data-filter="paper" role="tab" aria-selected="false">Paper Reviews</button>
+      <button class="filter" data-filter="lab" role="tab" aria-selected="false">Lab Write-ups</button>
+    </div>
+
+    <!--
+      POSTS — newest first.
+      To publish a post: copy a template from posts/ (e.g. posts/_template-lab.html),
+      write it, then add one <li> here with the matching data-category: cert, paper, or lab.
+
+      <li class="post-row" data-category="lab">
+        <a href="posts/forage-mastercard.html">
+          <time datetime="2026-10-20">Oct 20, 2026</time>
+          <span class="post-cat">Lab Write-up</span>
+          <span class="post-title">Mastercard Cybersecurity Job Simulation</span>
+          <span class="post-summary">Spotting phishing and designing training for the teams most at risk.</span>
+          <span class="post-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+    -->
+    <ol class="post-list">
+      <li class="post-row" data-category="lab">
+        <a href="posts/forage-infosec-analyst.html">
+          <time datetime="2026-10-16">Oct 16, 2026</time>
+          <span class="post-cat">Lab Write-up</span>
+          <span class="post-title">Information Security Analyst Job Simulation</span>
+          <span class="post-summary">Triaging a CISA-listed vulnerability for a project lead, then recovering a locked file with a password-recovery script.</span>
+          <span class="post-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+    </ol>
+
+    <p class="empty-state" hidden>
+      <span class="empty-mark" aria-hidden="true">✎</span>
+      First post coming soon.
+    </p>
+
+  </div>
+</main>
+
+<footer class="footer blog-footer">
+  <div class="footer-row">
+    <span>&copy; 2026 Chantelle Troutman</span>
+    <a href="#">Back to top ↑</a>
+  </div>
+</footer>
+
+</body>
+</html>
