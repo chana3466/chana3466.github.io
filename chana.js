@@ -189,7 +189,7 @@ if (postList) {
   // blog.html#lab etc. opens straight to that series (also used by the series cards)
   const filterFromHash = () => {
     const h = location.hash.slice(1);
-    applyFilter(['cert', 'paper', 'lab'].includes(h) ? h : 'all');
+    applyFilter(['cert', 'paper', 'lab', 'luna'].includes(h) ? h : 'all');
   };
   window.addEventListener('hashchange', filterFromHash);
   filterFromHash();

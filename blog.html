@@ -46,7 +46,7 @@
       <span class="blog-tagline">A CS student breaking into cybersecurity, in public.</span>
     </header>
 
-    <!-- THE THREE SERIES -->
+    <!-- THE SERIES -->
     <section class="series" aria-label="Series">
       <a class="series-card" href="#cert">
         <span class="series-num">01</span>
@@ -66,6 +66,12 @@
         <p>Hands-on labs, CTFs, and job simulations &mdash; how I approached them and what I'd defend against.</p>
         <span class="series-count" data-count="lab"></span>
       </a>
+      <a class="series-card" href="#luna">
+        <span class="series-num">04</span>
+        <h2>Luna Build Log</h2>
+        <p>Building Luna Yoga, phase by phase &mdash; the backend decisions, the problems, and what I'd do differently.</p>
+        <span class="series-count" data-count="luna"></span>
+      </a>
     </section>
 
     <!-- FILTERS -->
@@ -74,12 +80,13 @@
       <button class="filter" data-filter="cert" role="tab" aria-selected="false">Cert Progress</button>
       <button class="filter" data-filter="paper" role="tab" aria-selected="false">Paper Reviews</button>
       <button class="filter" data-filter="lab" role="tab" aria-selected="false">Lab Write-ups</button>
+      <button class="filter" data-filter="luna" role="tab" aria-selected="false">Luna Build Log</button>
     </div>
 
     <!--
       POSTS — newest first.
       To publish a post: copy a template from posts/ (e.g. posts/_template-lab.html),
-      write it, then add one <li> here with the matching data-category: cert, paper, or lab.
+      write it, then add one <li> here with the matching data-category: cert, paper, lab, or luna.
 
       <li class="post-row" data-category="lab">
         <a href="posts/forage-mastercard.html">

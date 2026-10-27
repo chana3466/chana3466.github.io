@@ -969,8 +969,22 @@ nav ul li.social img { height: 25px; width: auto; }
 
 .series {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   border-bottom: 1px solid var(--rule);
+}
+
+/* 4 cards → 2 across on tablets */
+@media (min-width: 681px) and (max-width: 1080px) {
+  .series { grid-template-columns: 1fr 1fr; }
+  .series-card:nth-child(odd) { padding-left: 0; border-left: none; }
+  .series-card:nth-child(n+3) { border-top: 1px solid var(--hair); }
+}
+
+/* …and 1 per row on phones */
+@media (max-width: 680px) {
+  .series { grid-template-columns: 1fr; }
+  .series-card + .series-card { padding-left: 0; border-left: none; border-top: 1px solid var(--hair); }
+  .series-card { padding: 20px 0; }
 }
 .series-card {
   color: inherit;
@@ -1177,11 +1191,7 @@ nav ul li.social img { height: 25px; width: auto; }
   .Luna-layout,
   .row-feature,
   .contact-grid,
-  .cv-grid,
-  .series { grid-template-columns: 1fr; }
-
-  .series-card + .series-card { padding-left: 0; border-left: none; border-top: 1px solid var(--hair); }
-  .series-card { padding: 20px 0; }
+  .cv-grid { grid-template-columns: 1fr; }
 
   .facts { grid-template-columns: 1fr 1fr; }
   .facts div:nth-child(3) { padding-left: 0; border-left: none; }
