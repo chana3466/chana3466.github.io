@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luna Yoga Backend: The Star Schema — Field Notes</title>
+  <meta name="description" content="Designing Luna Yoga's database on Supabase — a star schema that links yoga practice to moon phases and menstrual-cycle phases.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../chana.css">
+  <script src="../chana.js" defer></script>
+</head>
+
+<body class="blog-page">
+
+<nav>
+  <ul class="nav-links">
+    <li><a href="../index.html#top">Home</a></li>
+    <li><a href="../assets/Chantelle_Troutman_Resume-2.pdf" target="_blank">Resume</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="../index.html#experience">Experience</a></li>
+    <li><a href="../blog.html" class="active">Blog</a></li>
+    <li class="social">
+      <a href="https://www.linkedin.com/in/chantelle-troutman-b953033a5/" target="_blank"><img src="../linkedInd.png" alt="LinkedIn"></a>
+      <a href="https://github.com/chana3466" target="_blank"><img src="../github.png" alt="GitHub"></a>
+    </li>
+  </ul>
+</nav>
+
+<main class="post">
+  <article class="wrap post-wrap">
+
+    <a href="../blog.html" class="post-back">← All posts</a>
+
+    <header class="post-header">
+      <span class="kicker">Luna Build Log · <time datetime="2026-10-27">Oct 27, 2026</time></span>
+      <h1 class="post-h1">Designing Luna Yoga&rsquo;s Backend: A Star Schema on Supabase</h1>
+      <p class="post-dek">Phase 2 is the backend. Before writing a single endpoint, I needed a data model that could answer the question Luna is built around: <em>given where you are in your cycle and the moon&rsquo;s phase, what should you practice today?</em></p>
+    </header>
+
+    <table class="spec post-spec">
+      <tr><th>Project</th><td>Luna Yoga</td></tr>
+      <tr><th>Phase</th><td>Phase 2 — Backend</td></tr>
+      <tr><th>Stack</th><td>Supabase (PostgreSQL) · Node.js · React Native</td></tr>
+      <tr><th>This entry</th><td>Database design — the star schema</td></tr>
+    </table>
+
+    <div class="prose">
+      <h2>What I set out to do</h2>
+      <p>
+        Luna Yoga pairs three things &mdash; a user&rsquo;s menstrual-cycle phase, the current moon phase, and a
+        library of yoga styles &mdash; to recommend a practice. In Phase 1 that logic lived in the front end with
+        mocked data. For Phase 2 I needed a real database that could store every practice a user logs and then
+        <em>slice</em> that history: by cycle phase, by moon phase, by yoga type, by date. That &ldquo;one central
+        record, many ways to slice it&rdquo; shape is exactly what a <strong>star schema</strong> is for.
+      </p>
+
+      <h2>Why a star schema</h2>
+      <p>
+        A star schema has one <strong>fact table</strong> in the middle &mdash; the events you measure &mdash;
+        surrounded by <strong>dimension tables</strong> that describe each event. It&rsquo;s named for its shape:
+        the fact table is the center of the star, and the dimensions are the points.
+      </p>
+      <p>For Luna, the fact is <strong>a logged practice session</strong>, and the dimensions are everything I&rsquo;d want to filter or group by:</p>
+      <ul>
+        <li><strong>Who</strong> practiced &mdash; the user</li>
+        <li><strong>When</strong> &mdash; the date</li>
+        <li><strong>What</strong> &mdash; the yoga type</li>
+        <li><strong>Which moon phase</strong> it fell on</li>
+        <li><strong>Which cycle phase</strong> the user was in</li>
+      </ul>
+      <p>
+        Keeping those as separate dimension tables (instead of cramming every detail into one giant table) means
+        the moon-phase names, yoga descriptions, and cycle-phase info are each stored once and reused, and queries
+        like &ldquo;which styles do users reach for during their luteal phase?&rdquo; become a simple join and
+        group-by.
+      </p>
+
+      <figure class="schema-fig">
+        <svg viewBox="0 0 820 560" role="img" aria-label="Star schema: the fact_practice table in the center, linked to five dimension tables — dim_user, dim_date, dim_moon_phase, dim_cycle_phase, and dim_yoga_type.">
+          <!-- connector lines (drawn first, boxes cover the overlap) -->
+          <g stroke="#b9b4ab" stroke-width="1.5">
+            <line x1="410" y1="285" x2="115" y2="88"></line>
+            <line x1="410" y1="285" x2="705" y2="88"></line>
+            <line x1="410" y1="285" x2="105" y2="288"></line>
+            <line x1="410" y1="285" x2="715" y2="288"></line>
+            <line x1="410" y1="285" x2="410" y2="498"></line>
+          </g>
+
+          <!-- fact table -->
+          <g font-family="'Inter Tight', sans-serif">
+            <rect x="300" y="210" width="220" height="150" rx="8" fill="#141317"></rect>
+            <text x="410" y="236" text-anchor="middle" font-size="15" font-weight="700" fill="#f3efe6">fact_practice</text>
+            <g font-family="'JetBrains Mono', monospace" font-size="11" fill="#cfcbc2">
+              <text x="320" y="258">user_id</text>
+              <text x="320" y="274">date_id</text>
+              <text x="320" y="290">yoga_type_id</text>
+              <text x="320" y="306">moon_phase_id</text>
+              <text x="320" y="322">cycle_phase_id</text>
+              <text x="320" y="338">duration_min</text>
+              <text x="320" y="354">rating</text>
+            </g>
+          </g>
+
+          <!-- dimension boxes -->
+          <g font-family="'Inter Tight', sans-serif">
+            <!-- dim_user -->
+            <rect x="30" y="40" width="170" height="96" rx="6" fill="#fbf8f1" stroke="#141317" stroke-width="1.5"></rect>
+            <text x="115" y="64" text-anchor="middle" font-size="13" font-weight="700" fill="#141317">dim_user</text>
+            <g font-family="'JetBrains Mono', monospace" font-size="10.5">
+              <text x="44" y="84" fill="#e66aa8">user_id (PK)</text>
+              <text x="44" y="100" fill="#6e6c8a">display_name</text>
+              <text x="44" y="116" fill="#6e6c8a">avg_cycle_length</text>
+            </g>
+
+            <!-- dim_date -->
+            <rect x="620" y="40" width="170" height="96" rx="6" fill="#fbf8f1" stroke="#141317" stroke-width="1.5"></rect>
+            <text x="705" y="64" text-anchor="middle" font-size="13" font-weight="700" fill="#141317">dim_date</text>
+            <g font-family="'JetBrains Mono', monospace" font-size="10.5">
+              <text x="634" y="84" fill="#e66aa8">date_id (PK)</text>
+              <text x="634" y="100" fill="#6e6c8a">day_of_week</text>
+              <text x="634" y="116" fill="#6e6c8a">moon_phase_id</text>
+            </g>
+
+            <!-- dim_moon_phase -->
+            <rect x="20" y="240" width="180" height="96" rx="6" fill="#fbf8f1" stroke="#141317" stroke-width="1.5"></rect>
+            <text x="110" y="264" text-anchor="middle" font-size="13" font-weight="700" fill="#141317">dim_moon_phase</text>
+            <g font-family="'JetBrains Mono', monospace" font-size="10.5">
+              <text x="34" y="284" fill="#e66aa8">moon_phase_id (PK)</text>
+              <text x="34" y="300" fill="#6e6c8a">name</text>
+              <text x="34" y="316" fill="#6e6c8a">illumination</text>
+            </g>
+
+            <!-- dim_cycle_phase -->
+            <rect x="620" y="240" width="180" height="96" rx="6" fill="#fbf8f1" stroke="#141317" stroke-width="1.5"></rect>
+            <text x="710" y="264" text-anchor="middle" font-size="13" font-weight="700" fill="#141317">dim_cycle_phase</text>
+            <g font-family="'JetBrains Mono', monospace" font-size="10.5">
+              <text x="634" y="284" fill="#e66aa8">cycle_phase_id (PK)</text>
+              <text x="634" y="300" fill="#6e6c8a">name</text>
+              <text x="634" y="316" fill="#6e6c8a">energy_level</text>
+            </g>
+
+            <!-- dim_yoga_type -->
+            <rect x="320" y="450" width="180" height="96" rx="6" fill="#fbf8f1" stroke="#141317" stroke-width="1.5"></rect>
+            <text x="410" y="474" text-anchor="middle" font-size="13" font-weight="700" fill="#141317">dim_yoga_type</text>
+            <g font-family="'JetBrains Mono', monospace" font-size="10.5">
+              <text x="334" y="494" fill="#e66aa8">yoga_type_id (PK)</text>
+              <text x="334" y="510" fill="#6e6c8a">name</text>
+              <text x="334" y="526" fill="#6e6c8a">intensity</text>
+            </g>
+          </g>
+        </svg>
+        <figcaption>The star: <code>fact_practice</code> in the center, five dimensions as the points. Pink rows are primary keys.</figcaption>
+      </figure>
+
+      <h2>The tables, one by one</h2>
+
+      <h3>fact_practice — the center</h3>
+      <p>
+        One row per yoga session a user logs. It holds the <em>measurements</em> (how long, how it felt) and a
+        foreign key out to each dimension. This is the table that grows; the dimensions stay small.
+      </p>
+      <pre><code>create table public.fact_practice (
+  practice_id   bigint generated always as identity primary key,
+  user_id       uuid        not null references public.dim_user (user_id) on delete cascade,
+  date_id       date        not null references public.dim_date (date_id),
+  yoga_type_id  smallint    references public.dim_yoga_type (yoga_type_id),
+  moon_phase_id smallint    references public.dim_moon_phase (moon_phase_id),
+  cycle_phase_id smallint   references public.dim_cycle_phase (cycle_phase_id),
+  duration_min  int,
+  completed     boolean     default false,
+  rating        smallint    -- 1–5, how the session felt
+);</code></pre>
+
+      <h3>dim_user — who</h3>
+      <p>
+        The person practicing. On Supabase I tie this to the built-in <code>auth.users</code> table so a profile
+        row only exists for a real authenticated account, and I store the cycle info the recommendation logic
+        needs.
+      </p>
+      <pre><code>create table public.dim_user (
+  user_id          uuid primary key references auth.users (id) on delete cascade,
+  display_name     text,
+  avg_cycle_length int  default 28,
+  created_at       timestamptz default now()
+);</code></pre>
+
+      <h3>dim_moon_phase — which moon phase</h3>
+      <p>The eight lunar phases, stored once. Small, stable, and seeded up front.</p>
+      <pre><code>create table public.dim_moon_phase (
+  moon_phase_id smallint primary key,
+  name          text not null,   -- New, Waxing Crescent, First Quarter, …
+  illumination  numeric(4,1)     -- 0.0–100.0 % lit
+);</code></pre>
+
+      <h3>dim_cycle_phase — which cycle phase</h3>
+      <p>The four menstrual-cycle phases, each with the energy level Luna uses to tune its suggestions.</p>
+      <pre><code>create table public.dim_cycle_phase (
+  cycle_phase_id smallint primary key,
+  name           text not null,  -- Menstrual, Follicular, Ovulatory, Luteal
+  energy_level   text            -- low, rising, peak, winding-down
+);</code></pre>
+
+      <h3>dim_yoga_type — what</h3>
+      <p>The library of styles the app can recommend.</p>
+      <pre><code>create table public.dim_yoga_type (
+  yoga_type_id smallint primary key,
+  name         text not null,    -- Yin, Vinyasa, Restorative, …
+  intensity    text,             -- gentle, moderate, vigorous
+  description  text
+);</code></pre>
+
+      <h3>dim_date — when</h3>
+      <p>
+        A date dimension lets me group practices by weekday, weekend, or month without parsing timestamps in every
+        query. I also hang the moon phase off the date, since the moon&rsquo;s phase is a property of the day.
+      </p>
+      <pre><code>create table public.dim_date (
+  date_id       date primary key,
+  day_of_week   text,
+  is_weekend    boolean,
+  moon_phase_id smallint references public.dim_moon_phase (moon_phase_id)
+);</code></pre>
+
+      <h2>The Supabase part</h2>
+      <p>
+        Supabase is Postgres underneath, so all of the above is just standard SQL run in the Supabase SQL editor.
+        The two things I leaned on that are specific to it:
+      </p>
+      <ul>
+        <li>
+          <strong>Auth integration.</strong> <code>dim_user.user_id</code> references <code>auth.users(id)</code>,
+          so identities come from Supabase Auth and I never store passwords myself.
+        </li>
+        <li>
+          <strong>Row Level Security (RLS).</strong> This is the important one. By default any authenticated client
+          could read any row, so I enable RLS on the fact table and write a policy that limits each user to their
+          own practice history.
+        </li>
+      </ul>
+      <pre><code>alter table public.fact_practice enable row level security;
+
+create policy "Users read their own practice"
+  on public.fact_practice
+  for select
+  using (auth.uid() = user_id);
+
+create policy "Users log their own practice"
+  on public.fact_practice
+  for insert
+  with check (auth.uid() = user_id);</code></pre>
+      <p>
+        <code>auth.uid()</code> returns the logged-in user&rsquo;s id, so a user can only ever see or insert rows
+        tagged with their own <code>user_id</code> &mdash; enforced at the database, not just in the app.
+      </p>
+
+      <h2>Decisions I made (and why)</h2>
+      <ul>
+        <li><strong>Star over one big table.</strong> Dimensions are tiny and reused, which keeps the data clean and the filtering queries simple.</li>
+        <li><strong>Seed the dimensions.</strong> Moon phases, cycle phases, and yoga types are fixed sets, so I insert them once at setup rather than creating them on the fly.</li>
+        <li><strong>RLS from day one.</strong> Health and cycle data is sensitive. Turning on row-level security before writing any endpoints meant I never had a window where the data was exposed.</li>
+      </ul>
+
+      <h2>What I&rsquo;d do differently</h2>
+      <p>
+        Add a note here once you&rsquo;ve lived with the schema &mdash; e.g. whether a bridge table is needed for
+        practices that span more than one yoga type, or how indexing the foreign keys affects query speed as the
+        fact table grows.
+      </p>
+
+      <h2>Next</h2>
+      <p>
+        With the schema in place, the next entry is the recommendation query itself: joining the fact table to the
+        current moon phase and cycle phase to surface the right practice.
+      </p>
+    </div>
+
+  </article>
+</main>
+
+<footer class="footer blog-footer">
+  <div class="footer-row">
+    <span>&copy; 2026 Chantelle Troutman</span>
+    <a href="../blog.html">All posts →</a>
+  </div>
+</footer>
+
+</body>
+</html>

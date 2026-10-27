@@ -2,8 +2,9 @@
    TOKENS
    ===================== */
 :root {
-  --paper: #f3efe6;        /* cream, like the editorial references */
-  --paper-2: #ebe5d8;
+  --paper: #ffffff;        /* white */
+  --paper-2: #f5f5f4;      /* near-white band */
+  --card: #fafafa;         /* subtle off-white fills */
   --ink: #141317;
   --ink-soft: #4a4850;
   --muted: #8a8690;
@@ -94,6 +95,7 @@ nav {
   height: var(--nav-h);
   width: 100%;
   background-color: white;
+  border-bottom: 1px solid var(--hair);
   z-index: 1000;
   display: flex;
   justify-content: center;
@@ -216,6 +218,17 @@ nav ul li.social img { height: 25px; width: auto; }
    INTRO
    ===================== */
 .intro { padding: clamp(56px, 8vw, 96px) 0 clamp(64px, 9vw, 120px); }
+
+.intro-statement {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(32px, 5vw, 60px);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  margin-bottom: 24px;
+}
+.intro-statement em { font-style: italic; color: var(--pink); }
+.intro-text .read-all { display: inline-block; margin-top: 26px; }
 
 .masthead {
   display: flex;
@@ -757,7 +770,7 @@ nav ul li.social img { height: 25px; width: auto; }
 }
 
 .cv-card {
-  background: #fbf8f1;
+  background: var(--card);
   border: 1px solid var(--hair);
   border-radius: 4px;
   padding: clamp(18px, 2.5vw, 28px);
@@ -850,7 +863,7 @@ nav ul li.social img { height: 25px; width: auto; }
 }
 
 .cover {
-  background: #f1ebe0;
+  background: #ffffff;
   padding: 12px clamp(18px, 3vw, 32px) clamp(24px, 3vw, 36px);
   box-shadow: 0 24px 48px -32px rgba(0, 0, 0, 0.45);
 }
@@ -877,9 +890,9 @@ nav ul li.social img { height: 25px; width: auto; }
   padding-top: clamp(30px, 3vw, 38px);
   border: 3px solid #3a2a33;
   box-shadow:
-    0 0 0 4px #f1ebe0,
+    0 0 0 4px #ffffff,
     0 0 0 6px #3a2a33,
-    0 0 0 10px #f1ebe0,
+    0 0 0 10px #ffffff,
     0 0 0 12px #3a2a33;
   margin: 12px;
 }
@@ -888,7 +901,7 @@ nav ul li.social img { height: 25px; width: auto; }
   aspect-ratio: 4 / 3;
   object-fit: cover;
   filter: grayscale(1) contrast(1.15);
-  outline: 3px solid #f1ebe0;
+  outline: 3px solid #ffffff;
   box-shadow: 0 0 0 5px #3a2a33;
 }
 
@@ -1174,9 +1187,17 @@ nav ul li.social img { height: 25px; width: auto; }
   padding-left: 20px;
 }
 .prose figure img { width: 100%; border: 1px solid var(--hair); border-radius: 4px; }
+.schema-fig svg {
+  width: 100%;
+  height: auto;
+  background: var(--card);
+  border: 1px solid var(--hair);
+  border-radius: 6px;
+  padding: 8px;
+}
 .prose figcaption { font-size: 13px; color: var(--muted); margin-top: 8px; }
 .prose .callout {
-  background: #fbf8f1;
+  background: var(--card);
   border: 1px solid var(--hair);
   border-left: 3px solid var(--navy);
   padding: 14px 18px;
